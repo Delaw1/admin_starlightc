@@ -61,12 +61,12 @@ function changeProfilePicture() {
         data: form,
         processData: false,
         contentType: false,
-        success: function(resp) {
-            document.querySelector('#img').src = "/storage/" + resp + '?' + Math.random()
+        success: function(resp) { 
+            document.querySelector('#img').src = "/" + resp + '?' + Math.random()
 
         },
-        error: function() {
-
+        error: function(error) {
+            console.log(error)
         }
     })
 }

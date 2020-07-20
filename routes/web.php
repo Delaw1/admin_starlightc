@@ -30,7 +30,7 @@ Route::get('/', 'AdminController@index');
 Route::get('/current', 'AdminController@current');
 Route::get('/logout', 'AdminController@logout');
 Route::get("/submitted_projects", 'AdminController@submittedProject');
-Route::get("/approved_projects", 'AdminController@approvedProjects');
+Route::get("/approved_projects", 'AdminController@approvedProjects'); 
 Route::get("/unassigned_projects", 'AdminController@unassignedProjects');
 Route::get("/completed_projects", 'AdminController@completedProjects');
 

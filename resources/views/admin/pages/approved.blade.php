@@ -6,12 +6,12 @@
         @if(count($projects) > 0)
         @include('includes.success')
         @include('includes.error')
-        @foreach($projects as $project)
+        @foreach($projects as $project) 
         <div class="main-card mb-3 card">
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-6">
-                    <h5 class="card-title">{{ $project->order->title }}</h5>
+                    <h5 class="card-title">{{ $project->Order->title }}</h5>
                     <p>User: {{ $project->order->user->first_name }} {{ $project->order->user->last_name }}</p>
                     <p>Writer: {{ $project->order->writer->first_name }} {{ $project->order->writer->last_name }}</p>
                     </div>

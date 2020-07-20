@@ -67,7 +67,9 @@ class AdminController extends Controller
             if ($extension == $ext) {
                 $stat = Workerstat::where('user_id', Auth::user()->id)->first();
                 // $path = $request->file('project')->store('files/'.$stat->order->user_id);
-                $path = Storage::disk('public')->put('files/' . $stat->order->user_id, $request->file('project'));
+                $path = Storage::disk('public')->put('files/'. $stat->order->user_id, $request->file('project'));
+                $file = $request->file('project');
+                $file->move(base_path('files'), $fullFileName);
                 $project = Submitproject::where('order_id', $stat->order_id)->first();
                 if ($project) {
                     $project->update([
@@ -93,17 +95,33 @@ class AdminController extends Controller
 
     public function changeProfilePicture(Request $request)
     {
-        App::make('files')->link(storage_path('app/public'), public_path('storage'));
+        // App::make('files')->link(storage_path('app/public'), public_path('storage'));
         $extension = $request->file('picture')->extension();
-        $allowedExt = ['jpg', 'png', 'jpeg'];
+        $allowedExt = ['jpg', 'png', 'jpeg', 'PNG'];
         foreach ($allowedExt as $ext) {
             if ($ext == $extension) {
-                $path = Storage::disk('public')->putFileAs('profile', $request->file('picture'), Auth::User()->id . '.' . $extension);
-                // $request->file('picture')->storeAs('files', Auth::User()->id.'.'.$extension);
+                // $file = $request->file('picture');
+                // $file->move(public_path().'\profile_img', Auth::User()->id . '.' . $extension);
+                // // $path = Storage::disk('public_uploads')->put(Auth::User()->id . '.' . $extension, $request->file('picture'));
+                // // $path = Storage::disk('public')->putFileAs('profile', $request->file('picture'), Auth::User()->id . '.' . $extension);
+                // // $request->file('picture')->storeAs('files', Auth::User()->id.'.'.$extension);
+                // User::where('id', Auth::user()->id)->update([
+                //     'picture' => 'profile_img/'.Auth::User()->id . '.' . $extension
+                // ]);
+                // return 'profile_img/'.Auth::User()->id . '.' . $extension;
+
+                $file = $request->file('picture');
+                $filename = pathinfo($file, PATHINFO_FILENAME);
+                $fullFileName = $filename.strtotime('now').'.'.$extension;
+                $file->move(base_path('profile_img'), $fullFileName);
+                if(Auth::user()->picture) {
+                    $oldfilename = base_path('profile_img').'/'.Auth::user()->picture;
+                    File::delete($oldfilename);
+                }
                 User::where('id', Auth::user()->id)->update([
-                    'picture' => $path
+                    'picture' => $fullFileName
                 ]);
-                return $path;
+                return $fullFileName;
             }
         }
         return 'fail';
@@ -119,13 +137,14 @@ class AdminController extends Controller
         return view('admin.pages.submitted', ['projects' => $projects]);
     }
 
-    public function approvedProjects(Request $request)
+    public function approvedProjects(Request $request) 
     {
         if ($request->query('myjobs') == true) {
             $projects = Submitproject::where(['user_id' => Auth::User()->id, 'approved' => true])->get();
         } else {
             $projects = Submitproject::where('approved', true)->where('user_id', '!=', Auth::User()->id)->get();
         }
+        // return $projects;
         return view('admin.pages.approved', ['projects' => $projects]);
     }
 

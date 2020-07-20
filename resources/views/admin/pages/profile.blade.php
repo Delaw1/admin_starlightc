@@ -21,7 +21,7 @@
                 <div class="col-sm-4">
                     <div class="profile-img">
                         
-                        <img id="img" src="{{ Auth::User()->picture ? '/storage/'.Auth::User()->picture : '/assets/images/avatars/1.jpg'}}" alt="" />
+                        <img id="img" src="{{ Auth::User()->picture ? ''.Auth::User()->picture : '/assets/images/avatars/1.jpg'}}" alt="" />
                         <div class="file btn btn-lg btn-primary">
                             Change Photo
                             <input onchange="changeProfilePicture()" type="file" id="picture" name="picture" />

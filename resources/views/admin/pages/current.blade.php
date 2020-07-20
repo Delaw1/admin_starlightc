@@ -14,17 +14,17 @@
                     <h5 class="card-title">{{ $stat->order->title }}</h5>
                     </div>
                     <div class="col-lg-6 col-xl-4">
-                    <div class="card mb-3 widget-content bg-premium-dark">
+                    <!-- <div class="card mb-3 widget-content bg-premium-dark">
                         <div class="widget-content-wrapper text-white">
                             <div class="widget-content-left">
                                 <div class="widget-heading">Price</div>
                                 <div class="widget-subheading"></div>
                             </div>
                             <div class="widget-content-right">
-                                <!-- <div class="widget-numbers text-warning"><span>${{ $stat->order->price }}</span></div> -->
+                                <div class="widget-numbers text-warning"><span>${{ $stat->order->price }}</span></div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 </div>
                
@@ -32,7 +32,7 @@
                 @if($stat->submitted)
                 <div class="mb-2 mr-2 badge badge-info">Awaiting admin approval</div>
                 @endif
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
+                <p>
                     {{ $stat->order->description}}
                 </p>
                 <form action="/submitfile" method="post" enctype="multipart/form-data">
